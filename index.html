@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home - Sandip University</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+
+    body, html { height: 100%; }
+
+    /* Background Image */
+    body {
+        background: url('images/bg.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+    }
+
+    /* Header */
+    header {
+        text-align: center;
+        margin-top: 0px;
+        text-shadow: 3px 3px 7px rgba(0,0,0,0.7);
+        padding: 20px 0.1px;
+        background: rgba(0,0,0,0.5);
+    }
+
+    header h1 {
+
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    /* Feature Cards */
+    .features {
+        max-width: 1200px;
+        margin: 80px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        padding: 0 20px;
+    }
+.feature-card {
+    position: relative;
+    background: rgba(15, 3, 3, 0.15);
+    padding: 20px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(19, 18, 18, 0.3);
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    background: rgba(19, 18, 18, 0.25);
+}
+
+/* Image container with overlay */
+.card-img {
+    position: relative;
+}
+
+.icon-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 2.5rem;
+    color: #17e8de;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.feature-card:hover .icon-overlay {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+    /* Click Button */
+    .btn-click {
+        padding: 8px 18px;
+        background: rgba(255,255,255,0.7);
+        border-radius: 6px;
+        font-size: 1rem;
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+        display: inline-block;
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-click:hover {
+        background: #17e8de;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .section-img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    width: 250px;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(5px);
+    padding-top: 60px;
+    transition: 0.4s;
+    z-index: 2000;
+    border-right: 2px solid #17e8de;
+}
+
+.sidebar .slink {
+    display: block;
+    padding: 15px 20px;
+    margin: 5px 0;
+    color: #17e8de;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar .slink:hover {
+    background: rgba(23,232,222,0.25);
+    color: white;
+    transition: 0.3s;
+}
+
+/* Menu button (hamburger) */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #17e8de;
+    z-index: 3000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+/* Fullscreen popup background blur */
+.login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* Glassmorphism login box */
+.login-box {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 35px;
+    width: 360px;
+    border-radius: 18px;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 25px rgba(23, 232, 222, 0.5);
+    transition: 0.4s;
+}
+
+/* Heading */
+.login-box h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.login-box .sub {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.login-box input {
+    color: black !important;
+    padding: 10px;
+    font-size: 1.1rem;
+}
+
+/* Slide-down animation */
+@keyframes popupAnimation {
+    0% { transform: translateY(-40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-popup {
+    animation: popupAnimation 0.6s ease-out;
+}
+
+
+/* Close Button (X) */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #17e8de;
+}
+
+
+.notice-board {
+    width: 90%;
+    margin: 30px auto 20px auto;
+    padding: 10px 20px;
+   
+    color: #e81717;
+    font-weight: bold;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(23, 232, 222, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Optional: pause on hover */
+.notice-board marquee:hover {
+    animation-play-state: paused;
+}
+
+
+/* -------------------- TESTIMONIALS -------------------- */
+.testimonials {
+    max-width:900px; margin:50px auto; padding:20px; text-align:center;
+}
+.testimonials h2 { color:#17e8de; margin-bottom:20px; }
+.testimonial-slider {
+    display:flex; overflow:hidden; position:relative; border-radius:15px; background: rgba(0,0,0,0.4); padding:20px;
+}
+.testimonial {
+    min-width:100%; transition:0.5s; color:white;
+}
+.testimonial p { font-size:1rem; margin-bottom:10px; }
+.testimonial span { font-weight:bold; color:#17e8de; }
+
+
+
+footer {
+    margin-top: 190px;
+    background: rgba(0,0,0,0.6);
+    padding: 30px 5px;
+    color: #ddd;
+    backdrop-filter: blur(5px);
+}
+
+/* Footer sections */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-section {
+    flex: 1 1 250px;
+}
+
+.footer-section h3 {
+    font-size: 1.3rem;
+    color: #17e8de;
+    margin-bottom: 10px;
+}
+
+.footer-section p, .footer-section a {
+    font-size: 0.95rem;
+    color: #ddd;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.footer-section a:hover {
+    color: #17e8de;
+}
+
+/* Footer bottom line */
+.footer-bottom {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+</style>
+</head>
+
+<body>
+    
+<!-- HEADER -->
+<header>
+    <div class="menu-toggle" onclick="toggleSidebar()">
+    ☰
+</div>
+    <h1>Welcome to Sandip University</h1>
+</header>
+
+ <!-- SIDEBAR -->
+  
+<div id="sidebar" class="sidebar">
+    <a href="#" class="slink">Home</a>
+    <a href="students/login.php" class="slink">Student</a>
+    <a href="facultys/faculty_login.php" class="slink">Faculty</a>
+    <a href="#" class="slink" onclick="document.getElementById('registerPopup').style.display='flex'">Register</a>
+    <a href="#" class="slink" onclick="document.getElementById('loginPopup').style.display='flex'">Login</a>
+    
+    
+
+    
+</div>
+
+<!-- MENU BUTTON -->
+<div class="menu-toggle" onclick="toggleSidebar()">
+    ☰
+</div>
+
+<!-- LOGIN POPUP -->
+<div id="loginPopup" class="login-popup">
+    <div class="login-box animate-popup">
+        <!-- Close X Button -->
+        <span class="close-btn" onclick="closeLoginPopup()">×</span>
+
+        <h2>Welcome Back</h2>
+        <p class="sub">Please login to continue</p>
+
+        <form action="api/login_process.php" method="POST">
+            <input type="text" name="username" placeholder="Enter Username" class="form-control mb-3" required>
+            <input type="password" name="password" placeholder="Enter Password" class="form-control mb-4" required>
+
+            <button type="submit" class="btn btn-success w-100 mb-2">Login</button>
+        </form>
+
+        <p style="color:#ddd; font-size:0.9rem;">
+            Don't have an account? 
+            <span style="color:#17e8de; cursor:pointer;" onclick="openRegisterPopup()">Register</span>
+        </p>
+    </div>
+</div>
+
+<!-- REGISTER POPUP -->
+<div id="registerPopup" class="login-popup">
+    <div class="login-box animate-popup">
+        <!-- Close X Button -->
+        <span class="close-btn" onclick="closeRegisterPopup()">×</span>
+
+        <h2>Create Account</h2>
+        <p class="sub">Please fill in to register</p>
+
+        <form action="api/register_process.php" method="POST">
+            <input type="text" name="username" placeholder="Enter Username" class="form-control mb-2" required>
+            <input type="email" name="email" placeholder="Enter Email" class="form-control mb-2" required>
+            <input type="password" name="password" placeholder="Enter Password" class="form-control mb-2" required>
+            <input type="password" name="cpassword" placeholder="Confirm Password" class="form-control mb-3" required>
+
+            <button type="submit" class="btn btn-success w-100 mb-2">Register</button>
+        </form>
+
+        <p style="color:#ddd; font-size:0.9rem;">
+            Already have an account? 
+            <span style="color:#17e8de; cursor:pointer;" onclick="openLoginPopup()">Login</span>
+        </p>
+    </div>
+</div>
+<!-- TRANSPORT POPUP WITH MAP -->
+<div id="transportPopup" class="login-popup">
+  <div class="login-box animate-popup" style="width:90%; max-width:600px;">
+    <span class="close-btn" onclick="closePopup('transportPopup')">×</span>
+    <h2>Campus Transport Routes</h2>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.7039361713643!2d73.9452824150426!3d20.0078713943773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4b9f1d3f21d7d%3A0x5a3b4db6b5c9b4d7!2sSandip%20University!5e0!3m2!1sen!2sin!4v1696100000000!5m2!1sen!2sin" 
+      width="100%" 
+      height="400" 
+      style="border:0; border-radius:12px;" 
+      allowfullscreen="" 
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<!-- ADMISSION POPUP -->
+<div id="admissionPopup" class="login-popup">
+  <div class="login-box animate-popup">
+    <span class="close-btn" onclick="closePopup('admissionPopup')">×</span>
+    <h2>Admission Form</h2>
+    <form action="api/admission.php" method="POST">
+      <input type="text" name="name" placeholder="Your Name" class="form-control mb-2" required>
+      <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
+      <input type="tel" name="phone" placeholder="Phone Number" class="form-control mb-2" required>
+      <select name="course" class="form-control mb-2" required>
+        <option value="">Select Course</option>
+        <option value="B.Tech">B.Tech</option>
+        <option value="MBA">MBA</option>
+        <option value="BBA">BBA</option>
+      </select>
+      <button type="submit" class="btn btn-success w-100">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- CAMPUS POPUP -->
+<div id="campusPopup" class="login-popup">
+  <div class="login-box animate-popup">
+    <span class="close-btn" onclick="closePopup('campusPopup')">×</span>
+    <h2>Campus Enquiry</h2>
+    <form action="api/campus.php" method="POST">
+      <input type="text" name="name" placeholder="Your Name" class="form-control mb-2" required>
+      <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
+      <textarea name="message" placeholder="Your Message" class="form-control mb-2" required></textarea>
+      <button type="submit" class="btn btn-success w-100">Send</button>
+    </form>
+  </div>
+</div>
+
+<!-- PLACEMENTS POPUP -->
+<div id="placementPopup" class="login-popup">
+  <div class="login-box animate-popup">
+    <span class="close-btn" onclick="closePopup('placementPopup')">×</span>
+    <h2>Placement Enquiry</h2>
+    <form action="api/placement.php" method="POST">
+      <input type="text" name="name" placeholder="Your Name" class="form-control mb-2" required>
+      <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
+      <textarea name="message" placeholder="Your Message" class="form-control mb-2" required></textarea>
+      <button type="submit" class="btn btn-success w-100">Send</button>
+    </form>
+  </div>
+</div>
+
+<!-- LIBRARY POPUP -->
+<div id="libraryPopup" class="login-popup">
+  <div class="login-box animate-popup">
+    
+    <span class="close-btn" onclick="closePopup('libraryPopup')">×</span>
+    <h2>Library Access Form</h2>
+
+    <form action="api/library.php" method="POST">
+      
+      <input type="text" name="name" placeholder="Your Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <select name="purpose" class="form-control mb-2" required>
+        <option value="">Select Purpose</option>
+        <option value="Book Issue">Book Issue</option>
+        <option value="Book Return">Book Return</option>
+        <option value="Reading Room">Reading Room</option>
+        <option value="E-Library Access">E-Library Access</option>
+      </select>
+
+      <textarea name="message" placeholder="Your Message" class="form-control mb-2" required></textarea>
+
+      <button type="submit" class="btn btn-success w-100">Submit</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- SPORTS POPUP -->
+<div id="sportsPopup" class="login-popup">
+  <div class="login-box animate-popup">
+    
+    <span class="close-btn" onclick="closePopup('sportsPopup')">×</span>
+    <h2>Sports & Activities Registration</h2>
+
+    <form action="api/sports.php" method="POST">
+
+      <input type="text" name="name" placeholder="Your Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <select name="sport" class="form-control mb-2" required>
+        <option value="">Select Sport / Activity</option>
+        <option value="Cricket">Cricket</option>
+        <option value="Football">Football</option>
+        <option value="Basketball">Basketball</option>
+        <option value="Athletics">Athletics</option>
+        <option value="Volleyball">Volleyball</option>
+        <option value="Badminton">Badminton</option>
+        <option value="Gym / Fitness">Gym / Fitness</option>
+        <option value="Cultural Activities">Cultural Activities</option>
+      </select>
+
+      <textarea name="message" placeholder="Why do you want to join?" class="form-control mb-2" required></textarea>
+
+      <button type="submit" class="btn btn-success w-100">Submit</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- EVENTS POPUP -->
+<div id="eventsPopup" class="login-popup">
+  <div class="login-box animate-popup">
+
+    <span class="close-btn" onclick="closePopup('eventsPopup')">×</span>
+    <h2>Event Registration</h2>
+
+    <form action="api/events.php" method="POST">
+
+      <input type="text" name="name" placeholder="Your Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <select name="event_type" class="form-control mb-2" required>
+        <option value="">Select Event</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Seminar">Seminar</option>
+        <option value="Technical Fest">Technical Fest</option>
+        <option value="Cultural Fest">Cultural Fest</option>
+        <option value="Sports Event">Sports Event</option>
+        <option value="Guest Lecture">Guest Lecture</option>
+        <option value="Competition">Competition</option>
+      </select>
+
+      <textarea name="message" placeholder="Reason for Participation / Message" class="form-control mb-2" required></textarea>
+
+      <button type="submit" class="btn btn-success w-100">Register Now</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS POPUP -->
+<div id="achievementsPopup" class="login-popup">
+  <div class="login-box animate-popup">
+
+    <span class="close-btn" onclick="closePopup('achievementsPopup')">×</span>
+    <h2>Student Achievement Submission</h2>
+
+    <form action="api/achievements.php" method="POST" enctype="multipart/form-data">
+
+      <input type="text" name="name" placeholder="Your Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <select name="category" class="form-control mb-2" required>
+        <option value="">Select Achievement Type</option>
+        <option value="Academic">Academic</option>
+        <option value="Sports">Sports</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Technical">Technical</option>
+        <option value="Research / Paper">Research / Paper Presentation</option>
+        <option value="Innovation">Innovation / Startup</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <textarea name="details" placeholder="Describe your achievement" class="form-control mb-2" required></textarea>
+
+      <label class="form-label">Upload Certificate / Photo:</label>
+      <input type="file" name="file" class="form-control mb-3" required>
+
+      <button type="submit" class="btn btn-success w-100">Submit Achievement</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- HOSTEL POPUP -->
+<div id="hostelPopup" class="login-popup">
+  <div class="login-box animate-popup">
+
+    <span class="close-btn" onclick="closePopup('hostelPopup')">×</span>
+    <h2>Hostel Admission Form</h2>
+
+    <form action="api/hostel.php" method="POST">
+
+      <input type="text" name="name" placeholder="Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <select name="gender" class="form-control mb-2" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <select name="room_type" class="form-control mb-2" required>
+        <option value="">Select Room Type</option>
+        <option value="Single Room">Single Room</option>
+        <option value="Double Sharing">Double Sharing</option>
+        <option value="Triple Sharing">Triple Sharing</option>
+      </select>
+
+      <input type="number" name="year" placeholder="Year (1st / 2nd / 3rd / 4th)" class="form-control mb-2" required>
+
+      <textarea name="address" placeholder="Permanent Address" class="form-control mb-2" required></textarea>
+
+      <button type="submit" class="btn btn-success w-100">Apply For Hostel</button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- RESEARCH POPUP -->
+<div id="researchPopup" class="login-popup">
+  <div class="login-box animate-popup">
+
+    <span class="close-btn" onclick="closePopup('researchPopup')">×</span>
+    <h2>Research Project Submission</h2>
+
+    <form action="api/research.php" method="POST" enctype="multipart/form-data">
+
+      <input type="text" name="name" placeholder="Your Full Name" class="form-control mb-2" required>
+
+      <input type="email" name="email" placeholder="Email Address" class="form-control mb-2" required>
+
+      <input type="text" name="student_id" placeholder="Student ID" class="form-control mb-2" required>
+
+      <input type="text" name="project_title" placeholder="Research Project Title" class="form-control mb-2" required>
+
+      <select name="category" class="form-control mb-2" required>
+        <option value="">Select Research Category</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Biotechnology">Biotechnology</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Management">Management</option>
+        <option value="Commerce">Commerce</option>
+        <option value="Arts">Arts</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <textarea name="abstract" placeholder="Research Abstract (Summary)" class="form-control mb-2" required></textarea>
+
+      <label class="form-label">Upload Research Paper / PDF:</label>
+      <input type="file" name="file" class="form-control mb-3" required>
+
+      <button type="submit" class="btn btn-success w-100">Submit Research</button>
+
+    </form>
+
+  </div>
+</div>
+
+
+<!-- NOTICE BOARD -->
+<div class="notice-board" id="noticeBoard"></div>
+
+<script>
+const notices = [
+  "📢 Admission Open for 2026",
+  "🏆 Congrats to Placement Achievers",
+  "🎉 Upcoming Tech Fest on 15th Dec",
+  "📚 New Library Books Available",
+  "🚗 Transport Routes Updated"
+];
+let idx = 0;
+function showNotice() {
+  const board = document.getElementById("noticeBoard");
+  board.textContent = notices[idx];
+  idx = (idx + 1) % notices.length;
+}
+setInterval(showNotice, 4000);
+showNotice();
+</script>
+
+
+
+<!-- FEATURE CARDS WITH IMAGES WITH ICON OVERLAY -->
+<div class="features">
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/admission.png" class="section-img" alt="Admission">
+            <div class="icon-overlay"><i class="bi bi-pencil-square"></i></div>
+        </div>
+        <h3>Admission Open</h3>
+        <p>Start your journey with us now!</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('admissionPopup')">Apply Now</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/imperial-banner.png" class="section-img" alt="Campus Life">
+            <div class="icon-overlay"><i class="bi bi-building"></i></div>
+        </div>
+        <h3>Campus</h3>
+        <p>Experience life on our beautiful campus.</p>
+       <a href="javascript:void(0);" class="btn-click" onclick="openPopup('campusPopup')">Enquiry</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/placement.jpg" class="section-img" alt="Placements">
+            <div class="icon-overlay"><i class="bi bi-briefcase"></i></div>
+        </div>
+        <h3>Placements</h3>
+        <p>Get the career you dream of.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('placementPopup')">Enquiry</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/4.jpg" class="section-img" alt="Library">
+            <div class="icon-overlay"><i class="bi bi-book"></i></div>
+        </div>
+        <h3>Library</h3>
+        <p>Access thousands of books and journals.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('libraryPopup')">Explore</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/3.jpg" class="section-img" alt="Research">
+            <div class="icon-overlay"><i class="bi bi-lightbulb"></i></div>
+        </div>
+        <h3>Research</h3>
+        <p>Innovate and contribute to new discoveries.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('researchPopup')">Learn More</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/Home-Main-Image.jpg" class="section-img" alt="Sports">
+            <div class="icon-overlay"><i class="bi bi-trophy"></i></div>
+        </div>
+        <h3>Sports & Activities</h3>
+        <p>Join clubs and stay active.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('sportsPopup')">Join Now</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/campus.jpg" class="section-img" alt="Hostel">
+            <div class="icon-overlay"><i class="bi bi-house"></i></div>
+        </div>
+        <h3>Hostel</h3>
+        <p>Comfortable stay within campus.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('hostelPopup')">Book Now</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/transport.jpg" class="section-img" alt="Transport">
+            <div class="icon-overlay"><i class="bi bi-truck"></i></div>
+        </div>
+        <h3>Transport</h3>
+        <p>Safe and reliable campus transport.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('transportPopup')">View Routes</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/events.jpg" class="section-img" alt="Events">
+            <div class="icon-overlay"><i class="bi bi-calendar-event"></i></div>
+        </div>
+        <h3>Events</h3>
+        <p>Join workshops, seminars, and fests.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('eventsPopup')">See Events</a>
+
+    </div>
+
+    <div class="feature-card">
+        <div class="card-img">
+            <img src="images/1.jpg" class="section-img" alt="Achievements">
+            <div class="icon-overlay"><i class="bi bi-award"></i></div>
+        </div>
+        <h3>Achievements</h3>
+        <p>Celebrating student & faculty success.</p>
+        <a href="javascript:void(0);" class="btn-click" onclick="openPopup('achievementsPopup')">View More</a>
+
+    </div>
+
+</div>
+
+
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+    <h2>What Our Students Say</h2>
+    <div class="testimonial-slider" id="testimonialSlider">
+        <div class="testimonial"><p>"Amazing campus and faculty!"</p><span>- Rahul S.</span></div>
+        <div class="testimonial"><p>"Placements helped me land my dream job."</p><span>- Priya K.</span></div>
+        <div class="testimonial"><p>"Clubs and sports keep students active."</p><span>- Ankit R.</span></div>
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <!-- Contact Section -->
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <p>📍 Sandip University, Madhubani, Bihar</p>
+      <p>📞 +91 9334649467</p>
+      <p>📧 ajitkumar09112005@gmail.com</p>
+    </div>
+
+    <!-- About Section -->
+    <div class="footer-section">
+      <h3>About</h3>
+      <p>Sandip University is committed to excellence in education, research, and holistic development of students. Join us to explore endless opportunities!</p>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="footer-section">
+      <h3>Follow Us</h3>
+      <p>🌐 <a href="#" target="_blank">Website</a></p>
+      <p>📘 <a href="#" target="_blank">Facebook</a></p>
+      <p>🐦 <a href="#" target="_blank">Twitter</a></p>
+      <p>📸 <a href="#" target="_blank">Instagram</a></p>
+    </div>
+  </div>
+
+  <p class="footer-bottom">&copy; <span id="year"></span> Sandip University. All Rights Reserved.</p>
+</footer>
+
+<button id="topBtn" onclick="topFunction()">↑</button>
+<script>
+const topBtn = document.getElementById("topBtn");
+window.onscroll = () => {
+  topBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
+};
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+<style>
+#topBtn {
+  position: fixed; bottom: 40px; right: 40px;
+  display: none; font-size: 24px; background:#17e8de;
+  color:#fff; border:none; border-radius:50%; width:50px; height:50px;
+  cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+#topBtn:hover { background:#0fc5c0; }
+</style>
+
+<script>
+function toggleSidebar() {
+    let sidebar = document.getElementById("sidebar");
+
+    if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-250px"; // Hide
+    } else {
+        sidebar.style.left = "0px"; // Show
+    }
+}
+// Auto show login popup on page load
+window.onload = function() {
+    document.getElementById("loginPopup").style.display = "flex";
+};
+
+// Close login popup
+function closeLoginPopup() {
+    document.getElementById("loginPopup").style.display = "none";
+}
+
+// Close register popup
+function closeRegisterPopup() {
+    document.getElementById("registerPopup").style.display = "none";
+}
+
+// Open register popup from login popup
+function openRegisterPopup() {
+    closeLoginPopup();
+    document.getElementById("registerPopup").style.display = "flex";
+}
+
+// Open login popup from register popup
+function openLoginPopup() {
+    closeRegisterPopup();
+    document.getElementById("loginPopup").style.display = "flex";
+}
+
+// Sidebar login/register buttons
+document.querySelector('a[href="admin/login.php"]').addEventListener("click", function (e) {
+    e.preventDefault();
+    openLoginPopup();
+});
+document.querySelector('a[href="admin/register.php"]').addEventListener("click", function (e) {
+    e.preventDefault();
+    openRegisterPopup();
+});
+
+
+function openMapPopup() {
+    document.getElementById('mapPopup').style.display = 'flex';
+}
+function closeMapPopup() {
+    document.getElementById('mapPopup').style.display = 'none';
+}
+
+// Features data
+const featureData = {
+  "Admission Open": {
+    content: "Start your journey with us now!",
+    img: "images/admission.png"
+  },
+  "Campus": {
+    content: "Experience life on our beautiful campus.",
+    img: "images/imperial-banner.png"
+  },
+  "Placements": {
+    content: "Get the career you dream of.",
+    img: "images/placement.jpg"
+  },
+  "Library": {
+    content: "Access thousands of books and journals.",
+    img: "images/4.jpg"
+  },
+  "Research": {
+    content: "Innovate and contribute to new discoveries.",
+    img: "images/3.jpg"
+  },
+  "Sports & Activities": {
+    content: "Join clubs and stay active.",
+    img: "images/Home-Main-Image.jpg"
+  },
+  "Hostel": {
+    content: "Comfortable stay within campus.",
+    img: "images/campus.jpg"
+  },
+  "Transport": {
+    content: "Safe and reliable campus transport. Click below to see map.",
+    img: "images/transport.jpg"
+  },
+  "Events": {
+    content: "Join workshops, seminars, and fests.",
+    img: "images/events.jpg"
+  },
+  "Achievements": {
+    content: "Celebrating student & faculty success.",
+    img: "images/1.jpg"
+  }
+};
+
+// Open modal
+function openFeaturePopup(title) {
+    const data = featureData[title];
+    if(!data) return;
+
+    document.getElementById('popupTitle').textContent = title;
+    document.getElementById('popupContent').textContent = data.content;
+    document.getElementById('popupImg').src = data.img;
+
+    document.getElementById('featurePopup').style.display = 'flex';
+
+    // If transport, open embedded map instead of image
+    if(title === "Transport") {
+        document.getElementById('popupImg').outerHTML = `
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.7039361713643!2d73.9452824150426!3d20.0078713943773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4b9f1d3f21d7d%3A0x5a3b4db6b5c9b4d7!2sSandip%20University!5e0!3m2!1sen!2sin!4v1696100000000!5m2!1sen!2sin" 
+          width="100%" 
+          height="400" 
+          style="border:0; border-radius:12px;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>`;
+    }
+}
+
+// Open specific popup
+function openPopup(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+// Close specific popup
+function closePopup(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+
+// Close modal
+function closeFeaturePopup() {
+    document.getElementById('featurePopup').style.display = 'none';
+    // Reset iframe back to img (for Transport)
+    document.getElementById('featurePopup').querySelector('iframe')?.replaceWith(
+      document.createElement('img')
+    );
+}
+
+
+
+    // Live year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+</script>
+
+
+</body>
+</html>
